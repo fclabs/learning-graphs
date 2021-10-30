@@ -11,7 +11,7 @@ class TestGraph(unittest.TestCase):
 
         p = Paths( graph=g )
 
-        self.assertCountEqual( p.DepthFirstPath(0) , [0]  )
+        self.assertCountEqual( p.connectedNodesTo(0) , [0]  )
 
     def test_depth_path_first(self):
 
@@ -28,7 +28,7 @@ class TestGraph(unittest.TestCase):
     
         p = Paths( graph=g )
 
-        self.assertCountEqual( p.DepthFirstPath(0) , list(range(7))  )
+        self.assertCountEqual( p.connectedNodesTo(0) , list(range(7))  )
 
     def test_dpf_ignore_sep(self):
         # Setup the graph
@@ -47,9 +47,9 @@ class TestGraph(unittest.TestCase):
     
         p = Paths( graph=g )
 
-        self.assertCountEqual( p.DepthFirstPath(0) , list(range(7))  )
-        self.assertCountEqual( p.DepthFirstPath(7) , [ 7,8,9]  )
-        self.assertCountEqual( p.DepthFirstPath(8) , p.DepthFirstPath(9) )
+        self.assertCountEqual( p.connectedNodesTo(0) , list(range(7))  )
+        self.assertCountEqual( p.connectedNodesTo(7) , [ 7,8,9]  )
+        self.assertCountEqual( p.connectedNodesTo(8) , p.connectedNodesTo(9) )
 
 if __name__=='__main__':
     unittest.main()
