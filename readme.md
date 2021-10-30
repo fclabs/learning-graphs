@@ -4,9 +4,9 @@ Practice execises to be used in Programming 2 course
 
 ## Graph
 
-Adjacency-list graph representation
+Adjacency-list graph representation.
 
 
 ## Tests
 
-All models inclues a pra
+All models inclues a simple unit test files
