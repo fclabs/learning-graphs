@@ -29,6 +29,35 @@ class Paths:
             result.insert(0, current)
         return result
 
+    def BreadthFirstPaths( self, v: int ) -> list:
+        """
+        Return a list of vertices connected to v using BreathFirstPaths algorithm.
+        Args:
+            v (int): Vertix number to start
+
+        Returns:
+            list: List of vertices connected to v.
+        """
+        ## Start adding the node to be analized to the queue
+        pending = [ v ]
+        visited = [ None for i in range( self.graph.v_cnt ) ]
+        visited[ v ] = v
+        ## While the queue is not empty, process the next node
+        while len(pending) > 0:
+            ## pop the next node
+            vert = pending.pop(0)
+            ## Explore node adjacencies
+            for v_next in self.graph.adjacents(vert):
+                ## For each one, check if the adj is marked
+                if(visited[ v_next ] is None ):
+                    ## Never visited
+                    ## Mark it and added to the queue
+                    visited[ v_next ] = vert
+                    pending.append( v_next )
+        
+        return [ n for n in range( self.graph.v_cnt ) if visited[n] is not None ]
+
+
     @classmethod
     def _dfp( cls, graph: Graph, visited: list, vert: int , v_from: int):
         
