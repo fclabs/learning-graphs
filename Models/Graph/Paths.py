@@ -29,7 +29,7 @@ class Paths:
             result.insert(0, current)
         return result
 
-    def get_connected_verticces_bfp( self, v: int ) -> list:
+    def get_connected_vertices_bfp( self, v: int ) -> list:
         """
         Return a list of vertices connected to v using BreathFirstPaths algorithm.
         Args:

@@ -10,7 +10,7 @@ class TestGraph(unittest.TestCase):
         g = Graph(1)
         p = Paths( graph=g )
 
-        self.assertCountEqual( p.get_connected_verticces_bfp(0) , [0]  )
+        self.assertCountEqual( p.get_connected_vertices_bfp(0) , [0]  )
 
     def test_bfp_line_graph(self):
         # Setup the graph
@@ -26,7 +26,7 @@ class TestGraph(unittest.TestCase):
     
         p = Paths( graph=g )
 
-        self.assertCountEqual( p.get_connected_verticces_bfp(0) , list(range(7))  )
+        self.assertCountEqual( p.get_connected_vertices_bfp(0) , list(range(7))  )
 
     def test_dpf_ignore_sep(self):
         # Setup the graph
@@ -45,9 +45,9 @@ class TestGraph(unittest.TestCase):
     
         p = Paths( graph=g )
 
-        self.assertCountEqual( p.get_connected_verticces_bfp(0) , list(range(7))  )
-        self.assertCountEqual( p.get_connected_verticces_bfp(7) , [ 7,8,9]  )
-        self.assertCountEqual( p.get_connected_verticces_bfp(8) , p.get_connected_verticces_dfp(9) )
+        self.assertCountEqual( p.get_connected_vertices_bfp(0) , list(range(7))  )
+        self.assertCountEqual( p.get_connected_vertices_bfp(7) , [ 7,8,9]  )
+        self.assertCountEqual( p.get_connected_vertices_bfp(8) , p.get_connected_verticces_dfp(9) )
 
 if __name__=='__main__':
     unittest.main()
