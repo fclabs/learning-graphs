@@ -18,31 +18,31 @@ class TestEmptyGraph(unittest.TestCase):
         self.assertEqual( Graph(5).v_cnt , 5 )
         self.assertEqual( len(Graph(5).vertices) , 5 )
 
-    def test_addEdges_index_error(self):
+    def test_add_edges_index_error(self):
         g = Graph(3)
         with self.assertRaises(IndexError):
-            g.addEdge(0,4)
+            g.add_edge(0,4)
         with self.assertRaises(IndexError):
-            g.addEdge(4,0)
+            g.add_edge(4,0)
         
-    def test_addEdges_consitency(self):
+    def test_add_edges_consitency(self):
         g = Graph(3)
-        g.addEdge(0,1)
-        g.addEdge(0,2)
+        g.add_edge(0,1)
+        g.add_edge(0,2)
         self.assertEqual( len(list(g.adjacents(0))) , 2 )
         self.assertEqual( len(list(g.adjacents(1))) , 1 )
         self.assertEqual( len(list(g.adjacents(2))) , 1 )
 
-    def test_addEdges_multi_edge(self):
+    def test_add_edges_multi_edge(self):
         g = Graph(3)
-        g.addEdge(0,1)
-        g.addEdge(0,1)
+        g.add_edge(0,1)
+        g.add_edge(0,1)
         self.assertEqual( len(list(g.adjacents(0))) , 2 )
         self.assertEqual( len(list(g.adjacents(1))) , 2 )
 
-    def test_addEdges_loop(self):
+    def test_add_edges_loop(self):
         g = Graph(1)
-        g.addEdge(0,0)
+        g.add_edge(0,0)
         self.assertEqual( len(list(g.adjacents(0))) , 2 )
 
 

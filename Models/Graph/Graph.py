@@ -14,7 +14,7 @@ class Graph:
         for i in range(v_cnt):
             self.vertices.append( list() )
     
-    def addEdge(self, v: int , w: int ) -> None:
+    def add_edge(self, v: int , w: int ) -> None:
         
         self.vertices[v].append( w )
         self.vertices[w].append( v )

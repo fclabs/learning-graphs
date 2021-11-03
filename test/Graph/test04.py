@@ -10,44 +10,44 @@ class TestGraph(unittest.TestCase):
         g = Graph(1)
         p = Paths( graph=g )
 
-        self.assertCountEqual( p.BreadthFirstPaths(0) , [0]  )
+        self.assertCountEqual( p.get_connected_verticces_bfp(0) , [0]  )
 
     def test_bfp_line_graph(self):
         # Setup the graph
         g = Graph(7)
-        g.addEdge( 0 , 1 )
-        g.addEdge( 0 , 2 )
-        g.addEdge( 0 , 5 )
-        g.addEdge( 0 , 6 )
-        g.addEdge( 4 , 6 )
-        g.addEdge( 4 , 5 )
-        g.addEdge( 4 , 3 )
-        g.addEdge( 5 , 3 )
+        g.add_edge( 0 , 1 )
+        g.add_edge( 0 , 2 )
+        g.add_edge( 0 , 5 )
+        g.add_edge( 0 , 6 )
+        g.add_edge( 4 , 6 )
+        g.add_edge( 4 , 5 )
+        g.add_edge( 4 , 3 )
+        g.add_edge( 5 , 3 )
     
         p = Paths( graph=g )
 
-        self.assertCountEqual( p.BreadthFirstPaths(0) , list(range(7))  )
+        self.assertCountEqual( p.get_connected_verticces_bfp(0) , list(range(7))  )
 
     def test_dpf_ignore_sep(self):
         # Setup the graph
         g = Graph(10)
-        g.addEdge( 0 , 1 )
-        g.addEdge( 0 , 2 )
-        g.addEdge( 0 , 5 )
-        g.addEdge( 0 , 6 )
-        g.addEdge( 4 , 6 )
-        g.addEdge( 4 , 5 )
-        g.addEdge( 4 , 3 )
-        g.addEdge( 5 , 3 )
-        g.addEdge( 7 , 8 )
-        g.addEdge( 5 , 3 )
-        g.addEdge( 7 , 9 )
+        g.add_edge( 0 , 1 )
+        g.add_edge( 0 , 2 )
+        g.add_edge( 0 , 5 )
+        g.add_edge( 0 , 6 )
+        g.add_edge( 4 , 6 )
+        g.add_edge( 4 , 5 )
+        g.add_edge( 4 , 3 )
+        g.add_edge( 5 , 3 )
+        g.add_edge( 7 , 8 )
+        g.add_edge( 5 , 3 )
+        g.add_edge( 7 , 9 )
     
         p = Paths( graph=g )
 
-        self.assertCountEqual( p.BreadthFirstPaths(0) , list(range(7))  )
-        self.assertCountEqual( p.BreadthFirstPaths(7) , [ 7,8,9]  )
-        self.assertCountEqual( p.BreadthFirstPaths(8) , p.connectedNodesTo(9) )
+        self.assertCountEqual( p.get_connected_verticces_bfp(0) , list(range(7))  )
+        self.assertCountEqual( p.get_connected_verticces_bfp(7) , [ 7,8,9]  )
+        self.assertCountEqual( p.get_connected_verticces_bfp(8) , p.get_connected_verticces_dfp(9) )
 
 if __name__=='__main__':
     unittest.main()

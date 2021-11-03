@@ -4,7 +4,7 @@ class Paths:
     def __init__(self, graph: Graph ) -> None:
         self.graph = graph
 
-    def connectedNodesTo(self, v: int) -> list :
+    def get_connected_verticces_dfp(self, v: int) -> list :
         
         ## Generate a list of visited vertices init in None
         visited = [ None for i in range( self.graph.v_cnt ) ]
@@ -14,7 +14,7 @@ class Paths:
         ## Return all the vertices who was visited
         return [ n for n in range( self.graph.v_cnt ) if visited[n] is not None ]
 
-    def pathToNode(self, v_from: int , v_to: int ) -> list :
+    def get_path_to_vertix_dfp(self, v_from: int , v_to: int ) -> list :
 
         # if from and to are the same, return now
         if(v_from == v_to ): return [v_from]
@@ -29,7 +29,7 @@ class Paths:
             result.insert(0, current)
         return result
 
-    def BreadthFirstPaths( self, v: int ) -> list:
+    def get_connected_verticces_bfp( self, v: int ) -> list:
         """
         Return a list of vertices connected to v using BreathFirstPaths algorithm.
         Args:
