@@ -4,7 +4,7 @@ class Paths:
     def __init__(self, graph: Graph ) -> None:
         self.graph = graph
 
-    def get_connected_verticces_dfp(self, v: int) -> list :
+    def get_connected_vertices_dfp(self, v: int) -> list :
         
         ## Generate a list of visited vertices init in None
         visited = [ None for i in range( self.graph.v_cnt ) ]
@@ -40,7 +40,7 @@ class Paths:
         """
         ## Start adding the node to be analized to the queue
         pending = [ v ]
-        visited = [ None for i in range( self.graph.v_cnt ) ]
+        visited = [None]*self.graph.v_cnt
         visited[ v ] = v
         ## While the queue is not empty, process the next node
         while len(pending) > 0:
@@ -56,6 +56,28 @@ class Paths:
                     pending.append( v_next )
         
         return [ n for n in range( self.graph.v_cnt ) if visited[n] is not None ]
+
+    def get_clusters_count(self):
+        """
+        Clusters (Connected Components) 
+
+        Count the number of clusters. A cluster will be a set of vertices connected between them by vertices.
+        If v and w are vertices, v and w belongs to the same cluster if there is a path to reach from v to w.
+
+        The Connected Componentes class returns the number of clustes using DepthSearchFirst algorithm.
+        """        
+        
+        clusters = 0
+
+        visited = [None]*self.graph.v_cnt
+        for i in range(self.graph.v_cnt):
+            if visited[i] is None:
+                clusters += 1
+                self._dfp_cc_stack( graph=self.graph, visited=visited, vert=i, mark=clusters )
+
+        return clusters
+
+
 
 
     @classmethod
@@ -79,3 +101,25 @@ class Paths:
                     return True
 
         return False
+
+    def _dfp_cc_recur( cls, graph: Graph, visited: list, vert: int, mark: int): 
+        """
+        Recursion implementation
+        """
+        visited[vert] = mark
+        for v_next in [v for v in graph.adjacents( vert ) if visited[v] is None ]:
+                cls._dfp( graph, visited, v_next, mark )
+        return
+
+    def _dfp_cc_stack( cls, graph: Graph, visited: list, vert: int, mark: int): 
+        """
+        Stack implementation to avoid recursion limits on large graphs
+        """
+        to_explore = list()
+        to_explore.append(vert)
+        while(len(to_explore)>0):
+            v_now = to_explore.pop()
+            visited[v_now] = mark
+            for v_next in [v for v in graph.adjacents( v_now ) if visited[v] is None ]:
+                to_explore.append(v_next)
+        return
