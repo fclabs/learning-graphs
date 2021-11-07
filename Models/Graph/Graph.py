@@ -18,9 +18,23 @@ class Graph:
         
         self.vertices[v].append( w )
         self.vertices[w].append( v )
+
+    def remove_edge(self, v: int , w: int ) -> None:
+
+        self.vertices[v].remove( w )
+        self.vertices[w].remove( v )
     
     def adjacents(self, v: int ) -> Iterator :
         
         if self.v_cnt == 0 : raise ValueError('Empty Graph has no vertices')
 
         return iter(self.vertices[v])       
+
+class DirectedGraph(Graph):
+    def add_edge(self, v: int , w: int ) -> None:
+        
+        self.vertices[v].append( w )
+
+    def remove_edge(self, v: int , w: int ) -> None:
+
+        self.vertices[v].remove( w )
