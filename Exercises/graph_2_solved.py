@@ -53,8 +53,50 @@ def get_center( G: Graph )-> int:
 
 
 def get_diameter( G: Graph )-> list:
-    pass
+    """
+    The diameter must start and end on a leaf. This can be demostrated by:
 
+    - n is the start of the diameter path,
+    - n is not a leaf, so it has more than one adjacency
+    
+    then if it is the start or termination of the diameter path, one of the adjacencies
+    must be part of the diameter. the other adjacency is not part of the diameter but it can be 
+    added to it what revoke the assuption of n being the start of end of the diameter path.
+
+    Based on the algorith used to calculate the center, the diameter will always must contain the 
+    centers of the tree. 
+
+    """
+
+    ## if G has less than three nodes, return all the vertices
+    if(G.v_cnt<3): return list(range(G.v_cnt))
+
+    ## Get the centers of the graph
+    c = get_center(G)
+
+    ## Search a list of leafs
+    leafs = [i for i in range(G.v_cnt) if len(G.vertices[i])==1 ]
+    p = Paths(G)
+
+    max = ( -1 , None )
+    sec = max
+    ## Find the two longest different paths
+    i=0
+    while(i<len(leafs)):
+
+        ## MEasure path length from one of the centers to all the leafs        
+        path = p.get_path_to_vertix_dfp( c[0], leafs[i] )
+        if(len(path)>max[0]):
+            sec=max
+            max = ( len(path) , path )
+        elif (len(path)>sec[0]):
+            sec = ( len(path) , path )
+        i += 1
+
+    ## Reverse sec and concatenate max, except the repited center
+    print(max)
+    print(sec)
+    return [ x for x in range(len(sec[1])-1, 0,-1)] + max[1]
 
 if __name__=='__main__':
 
@@ -68,22 +110,28 @@ if __name__=='__main__':
     g.add_edge(6,2)
     g.add_edge(6,7)
     g.add_edge(8,7)
+    g.add_edge(8,9)
+    g.add_edge(10,9)
+    g.add_edge(11,9)
 
     print(g.vertices)
     print('Center:',get_center(g))
+    print('Diameter:',get_diameter(g)) 
     ## Single Node
     g = Graph(1)
     print(g.vertices)
     print('Center:',get_center(g)) 
+    print('Diameter:',get_diameter(g)) 
 
     # Two nodes
     g = Graph(2)
     g.add_edge(0,1)
     print(g.vertices)
     print('Center:',get_center(g))
+    print('Diameter:',get_diameter(g)) 
  
     ## small tree
-    n=10
+    n=100
     g = Graph(n)
     for i in range(1,n):
         node=randint(0,i)
@@ -92,9 +140,12 @@ if __name__=='__main__':
     t0 = perf_counter()
     print('Center ',n,' nodes:',get_center(g))
     print('Elapsed: ', (perf_counter()-t0)*1000, 'ms')
+    t0 = perf_counter()
+    print('Diameter:',get_diameter(g)) 
+    print('Elapsed: ', (perf_counter()-t0)*1000, 'ms')
 
     ## mid tree
-    n=5000
+    n=1000
     g = Graph(n)
     for i in range(1,n):
         node=randint(0,i)
@@ -102,15 +153,21 @@ if __name__=='__main__':
     t0 = perf_counter()
     print('Center ',n,' nodes:',get_center(g))
     print('Elapsed: ', (perf_counter()-t0)*1000, 'ms')
+    t0 = perf_counter()
+    print('Diameter:',get_diameter(g)) 
+    print('Elapsed: ', (perf_counter()-t0)*1000, 'ms')
 
     ## large tree
-    n=100000
+    n=50000
     g = Graph(n)
     for i in range(1,n):
         node=randint(0,i)
         g.add_edge(randint(0,i-1),i)
     t0 = perf_counter()
     print('Center ',n,' nodes:',get_center(g))
+    print('Elapsed: ', (perf_counter()-t0)*1000, 'ms')
+    t0 = perf_counter()
+    print('Diameter:',get_diameter(g)) 
     print('Elapsed: ', (perf_counter()-t0)*1000, 'ms')
 
     # ## xlarge tree
@@ -122,8 +179,11 @@ if __name__=='__main__':
     # t0 = perf_counter()
     # print('Center ',n,' nodes:',get_center(g))
     # print('Elapsed: ', (perf_counter()-t0)*1000, 'ms')
+    # t0 = perf_counter()
+    # print('Diameter:',get_diameter(g)) 
+    # print('Elapsed: ', (perf_counter()-t0)*1000, 'ms')
 
-    # ## xxlarge tree
+    # # ## xxlarge tree
     # n=10000000
     # g = Graph(n)
     # for i in range(1,n):
@@ -132,9 +192,12 @@ if __name__=='__main__':
     # t0 = perf_counter()
     # print('Center ',n,' nodes:',get_center(g))
     # print('Elapsed: ', (perf_counter()-t0)*1000, 'ms')
+    # t0 = perf_counter()
+    # print('Diameter:',get_diameter(g)) 
+    # print('Elapsed: ', (perf_counter()-t0)*1000, 'ms')
 
     ## large tree depth=1
-    n=100000
+    n=50000
     g = Graph(n)
     for i in range(1,n):
         g.add_edge(0,i)
@@ -143,7 +206,7 @@ if __name__=='__main__':
     print('Elapsed: ', (perf_counter()-t0)*1000, 'ms')
 
     ## large tree depth=n-1
-    n=100000
+    n=50000
     g = Graph(n)
     for i in range(1,n):
         g.add_edge(i-1,i)
